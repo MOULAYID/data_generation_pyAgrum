@@ -1,0 +1,71 @@
+network "mnar_13" {
+// written by aGrUM 1.12.1
+}
+
+variable A {
+   type discrete[3] {2, 31, 45};
+}
+
+variable B {
+   type discrete[4] {3, 74, 145, 555};
+}
+
+variable C {
+   type discrete[4] {24, 75, 88, 120};
+}
+
+variable D {
+   type discrete[4] {10, 50, 88, 150};
+}
+
+variable IC {
+   type discrete[2] {0, 1};
+}
+
+variable IB {
+   type discrete[2] {0, 1};
+}
+
+variable ID {
+   type discrete[2] {0, 1};
+}
+
+probability (A) {
+   table 0.4 0.4 0.2;
+}
+probability (B | A) {
+   (2) 0.3 0.2 0.3 0.2;
+   (31) 0.2 0.3 0.2 0.3;
+   (45) 0.4 0.1 0.4 0.1;
+}
+probability (C | B) {
+   (3) 0.1 0.2 0.3 0.4;
+   (74) 0.4 0.3 0.2 0.1;
+   (145) 0.2 0.2 0.4 0.2;
+   (555) 0.2 0.2 0.3 0.3;
+}
+probability (D | C) {
+   (24) 0.1 0.2 0.3 0.4;
+   (75) 0.4 0.3 0.2 0.1;
+   (88) 0.2 0.2 0.4 0.2;
+   (120) 0.1 0.2 0.4 0.3;
+}
+probability (IC | D) {
+   (10) 1 0;
+   (50) 0.7 0.3;
+   (88) 1 0;
+   (150) 0.7 0.3;
+}
+probability (IB | B) {
+   (3) 0.7 0.3;
+   (74) 1 0;
+   (145) 1 0;
+   (555) 0.7 0.3;
+}
+probability (ID | D) {
+   (10) 1 0;
+   (50) 0.7 0.3;
+   (88) 1 0;
+   (150) 0.7 0.3;
+}
+

@@ -1,0 +1,45 @@
+network "mnar_10" {
+// written by aGrUM 1.12.1
+}
+
+variable A {
+   type discrete[3] {2, 31, 45};
+}
+
+variable B {
+   type discrete[4] {3, 74, 145, 555};
+}
+
+variable C {
+   type discrete[4] {24, 75, 88, 120};
+}
+
+variable IC {
+   type discrete[2] {0, 1};
+}
+
+variable IB {
+   type discrete[2] {0, 1};
+}
+
+probability (A) {
+   table 0.4 0.4 0.2;
+}
+probability (B) {
+   table 0.3 0.2 0.3 0.2;
+}
+probability (C | A) {
+   (2) 0.1 0.2 0.3 0.4;
+   (31) 0.4 0.3 0.2 0.1;
+   (45) 0.2 0.2 0.4 0.2;
+}
+probability (IC) {
+   table 0.9 0.1;
+}
+probability (IB | C) {
+   (24) 1 0;
+   (75) 1 0;
+   (88) 0.9 0.1;
+   (120) 0.9 0.1;
+}
+

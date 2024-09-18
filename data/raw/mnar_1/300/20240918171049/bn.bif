@@ -1,0 +1,27 @@
+network "experiment" {
+// written by aGrUM 1.12.1
+}
+
+variable A {
+   type discrete[2] {1, 2};
+}
+
+variable B {
+   type discrete[2] {10, 100};
+}
+
+variable IB {
+   type discrete[2] {0, 1};
+}
+
+probability (A) {
+   table 1 0;
+}
+probability (B) {
+   table 0.6 0.4;
+}
+probability (IB | B) {
+   (10) 0.9 0.1;
+   (100) 1 0;
+}
+

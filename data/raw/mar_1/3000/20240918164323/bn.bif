@@ -1,0 +1,42 @@
+network "experiment" {
+// written by aGrUM 1.12.1
+}
+
+variable A {
+   type discrete[10] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+}
+
+variable B {
+   type discrete[2] {10, 100};
+}
+
+variable C {
+   type discrete[2] {4, 7};
+}
+
+variable IB {
+   type discrete[2] {0, 1};
+}
+
+probability (A) {
+   table 0.5 0.05 0.05 0.05 0.05 0.05 0.05 0.1 0.05 0.05;
+}
+probability (B) {
+   table 0.8 0.2;
+}
+probability (C) {
+   table 0.1 0.9;
+}
+probability (IB | A) {
+   (1) 1 0;
+   (2) 0.9 0.1;
+   (3) 0.9 0.1;
+   (4) 0.9 0.1;
+   (5) 1 0;
+   (6) 0.9 0.1;
+   (7) 0.9 0.1;
+   (8) 0.9 0.1;
+   (9) 1 0;
+   (10) 0.9 0.1;
+}
+

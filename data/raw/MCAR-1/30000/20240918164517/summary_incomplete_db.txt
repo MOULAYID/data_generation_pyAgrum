@@ -1,0 +1,19 @@
+Incomplete database summary:
+Basic statistics:
+                  A        B_star
+count  30000.000000  21069.000000
+mean      24.863900  33464.383882
+std       14.332516  18981.158839
+min       11.000000     88.000000
+25%       11.000000   1000.000000
+50%       32.000000  44444.000000
+75%       43.000000  44444.000000
+max       43.000000  44444.000000
+
+Missing rate:
+A          0.00
+B_star    29.77
+
+Data types:
+A            int8
+B_star    float64
