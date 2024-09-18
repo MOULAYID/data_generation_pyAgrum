@@ -48,4 +48,7 @@ By combining causal relationships between variables and the missingness mechanis
 3. **Probabilistic Dataset**: .
 
 ## **How to Use**
-
+   - A variety of missingness graphs, representing the three missingness mechanisms, are available in the /quantitative_bayesian_network/generators directory and are ready to be used.
+   - In the main script, you can specify the desired missingness graph, the size of the database, and the missingness rate.
+   - The quality of the generated datasets can be evaluated using metrics such as KL divergence, Wasserstein distance, and Euclidean distance, comparing the joint probability distribution from the Bayesian network with the empirical distribution of the generated data (methods available in /src/data_evaluation).
+   - The data can be stored either as a CSV file, in a PostgreSQL database, or both, depending on the specified parameter.
