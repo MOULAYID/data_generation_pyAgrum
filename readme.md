@@ -15,7 +15,7 @@ This project leverages **pyAgrum**, a Python library for Bayesian networks, to g
 1. The causal structure of the attributes in a dataset.
 2. The mechanism of missingness, encoding the probability of missing values.
 
-By combining causal relationships between variables and the missingness mechanism, this project creates both **complete datasets** and **incomplete datasets** by introducing missing values. Then compute a block independent probabilistic database from the incomplete database by leveraging the bayesian network.
+By combining causal relationships between variables and the missingness mechanism, this project creates both **complete datasets** and **incomplete datasets** by introducing missing values. Then compute a block independent probabilistic database from the incomplete database using the probailities defined in the bayesian network.
 
 ## **Inputs**
 
