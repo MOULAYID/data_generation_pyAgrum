@@ -99,7 +99,7 @@ def main():
     ####################################################################################################
 
     
-    bn, var_indicator, relation_name = Bayesian_newtwork
+    bn, var_indicator, relation_name = Bayesian_network
     synthetic_data_experiment(
         host=host,
         user=user,
