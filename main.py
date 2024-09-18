@@ -87,32 +87,30 @@ from src.data_generation import synthetic_data_experiment
 
 def main():
     # Configuration Parameters
+    ####################################################################################################
     host = "localhost"        # Database host address
     user = "postgres"         # Database username
     password = "postgres"     # Database password
     port = 5432               # Database port
-    db_sizes_list = [30000,100000]           # The size of the dataset to be generated
-    miss_rate_list = [0.1, 0.3]           # The rate at which values will be missing in the dataset
+    db_size = 30000         # The size of the dataset to be generated
+    miss_rate = 0.1          # The rate at which values will be missing in the dataset
     storing_option = 0        # 0 = Save as CSV files, 1 = Save in Postgres, 2 = Save in both
+    Bayesian_network = recoverable_mnar_1(miss_rate)
+    ####################################################################################################
 
-
-    for miss_rate in miss_rate_list:
-        # Bayesian_networks_list = [mcar_1(miss_rate), mar_1(miss_rate), recoverable_mnar_1(miss_rate)]  # mcar_1 is a model for generating missing values
-        for Bayesian_newtwork in functions:
-            bn, var_indicator, relation_name = Bayesian_newtwork(miss_rate)
-            for db_size in db_sizes_list:
-                synthetic_data_experiment(
-                    host=host,
-                    user=user,
-                    password=password,
-                    port=port,
-                    database=relation_name,
-                    bn=bn,
-                    db_size=db_size,
-                    var_indicator=var_indicator,
-                    missing_rate=miss_rate,
-                    storing_option=storing_option
-                )
-
+    
+    bn, var_indicator, relation_name = Bayesian_newtwork
+    synthetic_data_experiment(
+        host=host,
+        user=user,
+        password=password,
+        port=port,
+        database=relation_name,
+        bn=bn,
+        db_size=db_size,
+        var_indicator=var_indicator,
+        missing_rate=miss_rate,
+        storing_option=storing_option
+    )
 if __name__ == "__main__":
     main()
