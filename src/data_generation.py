@@ -440,7 +440,7 @@ def compute_probabilistic_db(df, bn, var_indicator):
     Returns:
         DataFrame: A DataFrame representing the probabilistic database with super blocks.
     """
-    prob_db = []
+    
 
     # Retrieve the first partially observed variable
     partial_obsrv_var = list(var_indicator.keys())[0]
@@ -451,8 +451,15 @@ def compute_probabilistic_db(df, bn, var_indicator):
     # Retrieve names of the parent nodes
     parents_names = [bn.variable(v).name() for v in parents_set]
 
+    unique_df = df.drop_duplicates()
+    # print("###########", unique_df)
+
+    df_final = pd.DataFrame()
+
     # Iterate over rows with potentially missing values
-    for index, row in df.iterrows():
+    for index, row in unique_df.iterrows():
+        print(f"defining the probability of tuples of pattern: {row}")
+        prob_db = []
         # Identify which variables have missing values
         proxy_vars_with_missing_values = set(row.index[row.isnull()])
         # Identify which variables are fully observed
@@ -478,7 +485,7 @@ def compute_probabilistic_db(df, bn, var_indicator):
                     else:
                         new_row[var] = value
                 new_row["probability"] = cp.get(i)
-                new_row["block_id"] = index
+                # new_row["block_id"] = index
 
                 possible_tuples.append(new_row)
             # Append all possible tuples to the prob_db list
@@ -487,18 +494,38 @@ def compute_probabilistic_db(df, bn, var_indicator):
         else:
             # If no missing values, assign a probability of 1
             row["probability"] = 1
-            row["block_id"] = index
+            # row["block_id"] = index
             prob_db.append(row)
 
-    # Convert list of dictionaries to DataFrame
-    prob_db_df = pd.DataFrame(prob_db)
+        prob_db_df = pd.DataFrame(prob_db)
+
+        # Define the columns to ignore in the row
+        columns_to_ignore = ['probability']
+
+        # Subset the row by dropping the columns that are not in the DataFrame
+        filtered_row = row.drop(labels=columns_to_ignore, errors='ignore')
+
+        # Compare the DataFrame rows with the filtered row
+        identical_rows = df[df.apply(lambda x: x.equals(filtered_row), axis=1)]
+
+        # Select rows to modify
+        rows_to_modify = identical_rows.index
+
+        for row_id in rows_to_modify:
+            # Create a copy of prob_df
+            prob_df_copy = prob_db_df.copy()
+
+            # Add or modify the 'block_id' column with the current row_id
+            prob_df_copy['block_id'] = row_id
+
+            # Append the modified prob_df_copy to df_final
+            df_final = pd.concat([df_final, prob_df_copy], ignore_index=True)
 
     # Rearrange the 'block_id' column to be the first column
-    block_id_col = prob_db_df.pop("block_id")
-    prob_db_df.insert(0, 'block_id', block_id_col)
+    block_id_col = df_final.pop("block_id")
+    df_final.insert(0, 'block_id', block_id_col)
 
-    # Remove suffixes and convert data types
-    return remove_star_suffix(auto_convert_types(prob_db_df))
+    return remove_star_suffix(auto_convert_types(df_final.sort_values(by='block_id', ignore_index=True)))
 # ________________________________________________________________________________
 def convert_row_types(row):
     converted_row = row.copy()  # Create a copy of the original row
